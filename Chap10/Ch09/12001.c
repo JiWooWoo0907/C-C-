@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int main(void)
+{
+    int n;
+    int scores[20];
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &scores[i]);
+    }
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (scores[j] < scores[j + 1]) {
+                int temp = scores[j];
+                scores[j] = scores[j + 1];
+                scores[j + 1] = temp;
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        printf("%d\n", scores[i]);
+    }
+    return 0;
+}
