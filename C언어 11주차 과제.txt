@@ -1,0 +1,85 @@
+1번. 구조체의 개념
+다음 중 구조체에 대한 설명으로 옳은 것은?
+① 구조체의 모든 멤버는 반드시 같은 자료형이어야 한다. ② 구조체를 정의할 때는 enum 키워드를 사용한다. ③ 구조체는 서로 다른 자료형의 데이터를 하나의 논리적 단위로 묶을 수 있다. ④ 구조체 변수의 멤버에는 점(.) 연산자로 접근할 수 없다.
+2번. 구조체 배열
+다음 코드를 실행했을 때 출력 결과는?
+#include <stdio.h>
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main(void) {
+    struct Student students[3] = {
+        {"Kim", 80},
+        {"Lee", 90},
+        {"Park", 70}
+    };
+
+    students[1].score += 5;
+    printf("%s %d\n", students[1].name, students[1].score);
+    return 0;
+}
+① Kim 85 ② Lee 95 ③ Lee 90 ④ Park 75
+3번. 구조체와 함수
+다음 코드를 실행했을 때 출력 결과는?
+#include <stdio.h>
+
+struct Student {
+    int score;
+};
+
+void change1(struct Student s) {
+    s.score = 50;
+}
+
+void change2(struct Student *p) {
+    p->score = 100;
+}
+
+int main(void) {
+    struct Student student = {80};
+
+    change1(student);
+    printf("%d ", student.score);
+
+    change2(&student);
+    printf("%d\n", student.score);
+    return 0;
+}
+① 50 50 ② 50 100 ③ 80 80 ④ 80 100
+4번. 공용체
+다음 선언에 대한 설명으로 옳은 것은?
+union Data {
+    int number;
+    float value;
+};
+① number와 value는 같은 메모리 공간을 공유한다. ② 공용체를 선언할 때는 struct 키워드를 반드시 함께 사용해야 한다. ③ 각 멤버는 독립된 공간에 저장되므로 두 값을 항상 동시에 보존할 수 있다. ④ 공용체의 멤버는 반드시 모두 같은 자료형이어야 한다.
+5번. 열거형
+프로그램에서 관련된 상수에 이름을 붙여 코드의 의미를 쉽게 나타내려고 한다. 다음 중 열거형을 올바르게 정의하고 사용하는 코드는?
+①
+enum State { WAIT, RUN, STOP };
+enum State current = "RUN";
+②
+struct State { WAIT, RUN, STOP };
+struct State current = RUN;
+③
+enum State { WAIT, RUN, STOP };
+enum State current = RUN;
+④
+union State { WAIT, RUN, STOP };
+union State current = RUN;
+￼
+정답 및 해설
+|문항|정답|확인할 개념            |교안 관련 쪽 | |--|--|------------------|--------| |1 |③ |구조체의 개념과 멤버 접근    |50~60쪽  | |2 |② |구조체 배열의 인덱스와 멤버 접근|79~83쪽  | |3 |④ |구조체의 값 전달과 포인터 전달 |86~95쪽  | |4 |① |공용체의 메모리 공유       |100~101쪽| |5 |③ |열거형 정의와 사용        |106~108쪽|
+1번 해설
+구조체는 int, float, 문자 배열 등 서로 다른 자료형의 멤버를 하나로 묶는 사용자 정의 자료형이다. struct 키워드로 정의하며, 구조체 변수의 멤버에는 변수명.멤버명으로 접근한다.
+2번 해설
+배열의 인덱스는 0부터 시작한다. 따라서 students[1]은 두 번째 학생인 Lee를 가리킨다. 이 학생의 점수 90에 5를 더했으므로 Lee 95가 출력된다. 구조체 배열의 멤버는 배열명[인덱스].멤버명으로 접근한다.
+3번 해설
+change1(student)는 구조체의 복사본을 전달한다. 함수 안에서 복사본의 score를 바꿔도 원본의 점수는 80이다. change2(&student)는 원본 구조체의 주소를 전달한다. p->score = 100;은 원본의 점수를 바꾸므로 두 번째 출력은 100이다. 여기서 p->score는 (*p).score와 같은 뜻이다.
+4번 해설
+공용체의 멤버들은 같은 메모리 공간을 공유한다. 한 멤버에 값을 저장한 뒤 다른 멤버에 값을 저장하면 공유 공간의 내용이 바뀌므로, 각 값을 독립적으로 동시에 보존하는 용도로 사용할 수 없다. 공용체는 union 키워드로 정의한다.
+5번 해설
+열거형은 enum 키워드로 관련된 상수들의 집합을 정의한다. RUN은 열거 상수이므로 따옴표 없이 사용한다. "RUN"은 문자열이어서 열거형 변수의 초기값으로 사용할 수 없다. ②와 ④는 구조체·공용체의 멤버 선언 형식에도 맞지 않는다.
